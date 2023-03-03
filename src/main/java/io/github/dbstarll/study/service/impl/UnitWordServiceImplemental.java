@@ -68,7 +68,7 @@ public final class UnitWordServiceImplemental extends StudyImplementals<UnitWord
   }
 
   @Override
-  public void afterPropertiesSet() throws Exception {
+  public void afterPropertiesSet() {
     super.afterPropertiesSet();
     notNull(wordService, "wordService is null");
     notNull(unitService, "unitService is null");
@@ -81,7 +81,7 @@ public final class UnitWordServiceImplemental extends StudyImplementals<UnitWord
     if (filter != null) {
       pipeline.add(Aggregates.match(filter));
     }
-    query.apply(pipeline);
+    pipeline.addAll(query.apply());
     pipeline.add(PROJECTION_UNIT_WORD);
     pipeline.add(exerciseLookup(exerciseBookId));
     pipeline.add(wordLookup());
